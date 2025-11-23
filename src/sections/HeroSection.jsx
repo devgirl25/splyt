@@ -1,9 +1,13 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { SplitText } from "gsap/all";
+import { ScrollTrigger, SplitText } from "gsap/all";
+import { useRef } from "react";
 import { useMediaQuery } from "react-responsive";
 
+gsap.registerPlugin(ScrollTrigger, SplitText);
+
 const HeroSection = () => {
+  const containerRef = useRef(null);
   const isMobile = useMediaQuery({
     query: "(max-width: 768px)",
   });
@@ -12,58 +16,63 @@ const HeroSection = () => {
     query: "(max-width: 1024px)",
   });
 
-  useGSAP(() => {
-    const titleSplit = SplitText.create(".hero-title", {
-      type: "chars",
-    });
+  useGSAP(
+    () => {
+      const titleSplit = new SplitText(".hero-title", {
+        type: "chars",
+      });
 
-    const tl = gsap.timeline({
-      delay: 1,
-    });
+      const tl = gsap.timeline({
+        delay: 0.5,
+      });
 
-    tl.to(".hero-content", {
-      opacity: 1,
-      y: 0,
-      ease: "power1.inOut",
-    })
-      .to(
-        ".hero-text-scroll",
-        {
-          duration: 1,
-          clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-          ease: "circ.out",
+      tl.to(".hero-content", {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power2.out",
+      })
+        .to(
+          ".hero-text-scroll",
+          {
+            duration: 1,
+            clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+            ease: "circ.out",
+          },
+          "-=0.5"
+        )
+        .from(
+          titleSplit.chars,
+          {
+            yPercent: 150,
+            stagger: 0.03,
+            duration: 0.8,
+            ease: "back.out(1.7)",
+          },
+          "-=0.8"
+        );
+
+      gsap.to(".hero-container", {
+        scrollTrigger: {
+          trigger: ".hero-container",
+          start: "top top",
+          end: "bottom top",
+          scrub: true,
         },
-        "-=0.5"
-      )
-      .from(
-        titleSplit.chars,
-        {
-          yPercent: 200,
-          stagger: 0.02,
-          ease: "power2.out",
-        },
-        "-=0.5"
-      );
-
-    const heroTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".hero-container",
-        start: "1% top",
-        end: "bottom top",
-        scrub: true,
-      },
-    });
-    heroTl.to(".hero-container", {
-      rotate: 7,
-      scale: 0.9,
-      yPercent: 30,
-      ease: "power1.inOut",
-    });
-  });
+        rotateX: 10,
+        rotate: 5,
+        scale: 0.9,
+        yPercent: 20,
+        transformOrigin: "center top",
+        ease: "none",
+      });
+    },
+    { scope: containerRef }
+  );
 
   return (
-    <section className="bg-main-bg">
-      <div className="hero-container">
+    <section className="bg-main-bg" ref={containerRef}>
+      <div className="hero-container perspective-1000">
         {isTablet ? (
           <>
             {isMobile && (
