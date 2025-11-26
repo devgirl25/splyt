@@ -47,12 +47,5 @@ If you want to run this project locally, follow these steps:
 
 4.  Open your browser and navigate to `http://localhost:5173` (or the port shown in your terminal).
 
-## 👨‍💻 Author
-
-**Sandesh Sapkota**
-
-- [GitHub](https://github.com/sandesh-sapkota)
-- [LinkedIn](https://www.linkedin.com/in/sandesh-sapkota-dev)
-
 ---
 ***Made with love and a lot of coffee.❣️***
