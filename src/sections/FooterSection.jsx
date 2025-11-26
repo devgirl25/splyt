@@ -87,7 +87,7 @@ const FooterSection = () => {
           {/* The final row with copyright and legal links. */}
           <p className="opacity-50">Copyright © 2025 Spylt - All Rights Reserved</p>
           <p className="font-bold hover:text-light-brown transition-colors cursor-pointer">
-            Made with love by Sandesh Sapkota ❣️
+            Made with love by Prachi ❣️
           </p>
           <div className="flex items-center gap-7 opacity-50">
             <p>Privacy Policy</p>
